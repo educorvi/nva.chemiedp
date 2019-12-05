@@ -1,0 +1,41 @@
+<script type="text/javascript">
+      $(document).ready(function() {
+        $("[data-toggle='popover']").popover();
+        $("[data-toggle='popover']").click(function(ev){
+          ev.preventDefault();
+          })
+        });</script>
+
+<div tal:replace="structure provider:plone.abovecontenttitle" />
+
+<h1 tal:content="context/title" />
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Homepage</th>
+      <th>E-Mail</th>
+      <th>Produkte</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr tal:repeat="item view/objlist">
+      <td data-title="Name">
+        <a href="#" tabindex="0" data-toggle="popover" data-trigger="click"
+        data-placement="right" data-html="true" title="#" data-content="#" 
+        tal:attributes="data-content item/anschrift; title item/title" tal:content="item/title" data-container="body">Name</a>
+      </td>
+      <td data-title="Homepage"><a href="#" tal:attributes="href item/homepage" tal:content="item/homepage"/></td>
+      <td data-title="E-Mail"><a href="#" tal:attributes="href string:mailto:${item/email}" tal:content="item/email"/>
+      <td data-title="Produkte">
+        <div class="dropdown">
+          <button class="btn btn-small dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+            Produkte
+            <span class="caret"></span>
+          </button>
+          <span tal:replace="structure item/backrefs"/>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,24 @@
+<h1 tal:content="context/title"/>
+
+<table class="table table-striped">
+  <tr><th>Hersteller</th><td data-title="Hersteller" tal:content="python: context.hersteller.to_object.title"/></tr>
+  <tr><th>Anwendungsgebiete</th><td data-title="Anwendungsgebiete" tal:content="view/anwendungsgebiete"/></tr>
+  <tr tal:condition="python: context.flammpunkt and context.wertebereich">
+    <th>Flammpunkt</th>
+    <td data-title="Flammpunkt" tal:content="string: &gt;${context/flammpunkt}&deg;C"/>
+  </tr>
+  <tr tal:condition="python: context.flammpunkt and not context.wertebereich">
+    <th>Flammpunkt</th><td data-title="Flammpunkt" tal:content="string: ${context/flammpunkt}&deg;C"/>
+  </tr>
+  <tr tal:condition="python: not context.flammpunkt">
+    <th>Flammpunkt</th><td data-title="Flammpunkt" tal:content="string: nicht anwendbar"/>
+  </tr>
+  <tr>
+    <th>Emissionsgeprüft</th>
+    <td tal:condition="context/emissionsgeprueft">ja</td>
+    <td tal:condition="not: context/emissionsgeprueft">nein</td>
+  </tr>
+</table>
+<div>
+<a href="#" tal:attributes="href view/parenturl" class="btn btn-small">Produktübersicht</a>
+</div>

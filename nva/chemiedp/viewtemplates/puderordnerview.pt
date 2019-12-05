@@ -1,0 +1,99 @@
+<script type="text/javascript">
+      $(document).ready(function() {
+        $("[data-toggle='popover']").popover();
+        });</script>
+
+<div class="row">
+<div tal:replace="structure provider:plone.abovecontenttitle" />
+
+<ul class="nav nav-tabs" role="tablist">
+  <li class="dropdown" tal:attributes="class view/alle"><a href="#" tal:attributes="href view/url">Produkte-Hersteller</a></li>
+  <li class="dropdown" tal:attributes="class view/produktklasse">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      Produkte-Produktklassen<span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation"><a tabindex="-1" role="menuitem" href="#" 
+          tal:attributes="href string: ${view/url}/?produktklasse=fein">fein (Medianwert &le; 20µm)</a></li>
+      <li role="presentation"><a tabindex="-1" role="menuitem" href="#" 
+          tal:attributes="href string: ${view/url}/?produktklasse=mittel">mittel (20µm &lt; Medianwert &le; 40µm)</a></li>
+      <li role="presentation"><a tabindex="-1" role="menuitem" href="#" 
+          tal:attributes="href string: ${view/url}/?produktklasse=grob">grob (40µm &lt; Medianwert)</a></li>
+    </ul>
+  </li>
+  <!--
+  <li class="dropdown" tal:attributes="class view/material">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      Ausgangsmaterial<span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+      <li role="presentation"><a tabindex="-1" role="menuitem" href="#" 
+          tal:attributes="href string: ${view/url}/?material=Staerke">Stärke</a></li>
+      <li role="presentation"><a tabindex="-1" role="menuitem" href="#" 
+          tal:attributes="href string: ${view/url}/?material=Calciumcarbonat">Calciumkarbonat</a></li>
+      <li role="presentation"><a tabindex="-1" role="menuitem" href="#" 
+          tal:attributes="href string: ${view/url}/?material=Zucker">Zucker</a></li>
+    </ul>
+  </li>
+  -->
+</ul>
+
+<h1 tal:content="context/title">Datenbank Druckbestäubungspuder</h1>
+<p tal:condition="context/bemerkungen" tal:content="structure python: context.bemerkungen.output"/>
+<p><b tal:condition="view/auswahl">Ihre Auswahl: <span tal:content="structure view/auswahl"/></b></p>
+<h6>Übersicht Hersteller und Produkte</h6>
+
+<span tal:repeat="objkey python: view.myhersteller">
+
+  <div tal:condition="python: view.objects.get(objkey)" class="betem-accordion" id="accordion2" 
+       tal:attributes="id string: accordion2-${objkey}">
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <h2>
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" 
+             tal:attributes="data-parent string: #accordion2-${objkey};
+                             href string:#${objkey};"
+             tal:content="python: view.hersteller.get(objkey)"></a>
+        </h2>
+      </div>
+      <div id="" class="accordion-body collapse in" tal:attributes="id string:${objkey};
+                                                                    class string:accordion-body ${view/collapse}">
+        <div class="accordion-inner">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th class="row-20">Name</th>
+                <th class="row-10">Produktklasse</th>
+                <th class="row-20">Ausgangsmaterial</th>
+                <th class="row-10"><nobr>Medianwert [µm]</nobr></th>
+                <th class="row-20">Volumenanteil<br/>&lt;10µm [Vol-%]</th>
+                <th class="row-10">Emissionsarm</th>
+                <th class="row-10">Prüfdatum</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr tal:repeat="item python: view.objects.get(objkey)">
+                <td data-title="Name" tal:content="item/title"></td>
+                <td data-title="Produktklasse" tal:content="item/produktklasse"></td>
+                <td data-title="Ausgangsmaterial" tal:content="item/material"></td>
+                <td style="text-align: center;" data-title="Medianwert in µm" tal:content="item/medianwert"></td>
+                <td style="text-align: center;" data-title="Volumenanteil &lt; 10 µm" tal:content="item/volumenanteil"></td>
+                <td style="text-align: center;" data-title="Emissionsarm">
+                  <img tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+                       tal:condition="python: item.get('emissionsgeprueft', '') == 'ja'"
+                       tal:attributes="src string:${navroot}/++resource++nva.chemiedp/icon_emissionsarm.jpg"
+                       title="Emissionsarmes Produkt" alt="ja"/>
+                  <span tal:condition="python: item.get('emissionsgeprueft', '') != 'ja'"> - </span>
+                </td>
+                <td style="text-align: right;" data-title="Prüfdatum" tal:content="item/pruefdatum"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</span>
+
+<div tal:replace="structure provider:plone.belowcontentbody" />
+</div>

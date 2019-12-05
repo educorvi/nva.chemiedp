@@ -1,0 +1,19 @@
+<h1 tal:content="context/title"/>
+<p tal:content="context/description"/>
+
+<div class="adresse">
+  <p tal:content="context/anschrift1"/>
+  <p tal:condition="context/anschrift2" tal:content="context/anschrift2"/>
+  <p tal:condition="context/anschrift3" tal:content="context/anschrift3"/>
+  <p tal:content="context/land"/>
+</div>
+
+<div class="contact">
+  <table class="table table-striped">
+    <tr><th>Telefon</th><td data-title="Telefon" tal:content="context/telefon"/></tr>
+    <tr tal:condition="context/telefax"><th>Telefax</th><td data-title="Telefax" tal:content="context/telefax"/></tr>
+    <tr tal:condition="context/email"><th>E-Mail</th><td data-title="E-Mail" tal:content="context/email"/></tr>
+    <tr tal:condition="context/homepage"><th>Homepage</th><td data-title="Homepage" tal:content="context/homepage"/></tr>
+  </table>
+</div>
+    

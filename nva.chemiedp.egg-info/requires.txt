@@ -1,0 +1,7 @@
+setuptools
+plone.app.dexterity [grok, relations]
+plone.app.relationfield
+plone.namedfile [blobs]
+plone.app.referenceablebehavior
+plone.multilingualbehavior
+collective.z3cform.datagridfield

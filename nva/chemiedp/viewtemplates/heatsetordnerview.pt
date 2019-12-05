@@ -1,0 +1,76 @@
+<script type="text/javascript">
+      $(document).ready(function() {
+        $("[data-toggle='popover']").popover();
+        });</script>
+
+<div class="row">
+<div tal:replace="structure provider:plone.abovecontenttitle" />
+
+<ul class="nav nav-tabs" role="tablist">
+  <li class="dropdown" tal:attributes="class view/alle"><a href="#" tal:attributes="href view/url">Produkte-Hersteller</a></li>
+</ul>
+
+<h1 tal:content="context/title">Datenbank Heatsetwaschmittel</h1>
+<p tal:condition="context/bemerkungen" tal:content="structure python: context.bemerkungen.output"/>
+<h6>Übersicht Hersteller und Produkte</h6>
+
+<span tal:repeat="objkey python: view.myhersteller">
+
+  <div tal:condition="python: view.objects.get(objkey)" class="betem-accordion" id="accordion2" 
+       tal:attributes="id string: accordion2-${objkey}">
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <h2>
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" 
+             tal:attributes="data-parent string: #accordion2-${objkey};
+                             href string:#${objkey};"
+             tal:content="python: view.hersteller.get(objkey)"></a>
+        </h2>
+      </div>
+      <div id="" class="accordion-body collapse in" tal:attributes="id string:${objkey};
+                                                                    class string:accordion-body ${view/collapse}">
+        <div class="accordion-inner">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th rowspan="2" class="row-20">Name</th>
+                <th style="text-align:center;" colspan="4">Verdampfungsfaktor (F<sub>V</sub>) für Bahntemperaturen bis:</th>
+                <th style="text-align:center;" rowspan="2" class="row-15">UEG in g/m<sup>3</sup></th>
+                <th style="text-align:center;" rowspan="2" class="row-15">Response-faktor</th>
+                <th style="text-align:center;" rowspan="2" class="row-10">Emissionsarm</th>
+              </tr>
+                <th style="text-align:center;" class="row-10">150 &deg;C</th>
+                <th style="text-align:center;" class="row-10">160 &deg;C</th>
+                <th style="text-align:center;" class="row-10">170 &deg;C</th>
+                <th style="text-align:center;" class="row-10">180 &deg;C</th>
+            </thead>
+            <tbody>
+              <tr tal:repeat="item python: view.objects.get(objkey)">
+                <td data-title="Name" tal:content="item/title"></td>
+                <td style="text-align:center;" data-title="150" tal:content="python: str(item['verdampfung']['bahn_150']).replace('.',',')"></td>
+                <td tal:condition="item/verdampfung/bahn_160" style="text-align:center;" data-title="160" tal:content="python: str(item['verdampfung']['bahn_160']).replace('.',',')"></td>
+                <td tal:condition="not: item/verdampfung/bahn_160" style="text-align:center; color:red;" data-title="160">1,0</td>
+                <td tal:condition="item/verdampfung/bahn_170"style="text-align:center;" data-title="170" tal:content="python: str(item['verdampfung']['bahn_170']).replace('.',',')"></td>
+                <td tal:condition="not: item/verdampfung/bahn_170" style="text-align:center; color:red;" data-title="170">1,0</td>
+                <td tal:condition="item/verdampfung/bahn_180" style="text-align:center;" data-title="180" tal:content="python: str(item['verdampfung']['bahn_180']).replace('.',',')"></td>
+                <td tal:condition="not: item/verdampfung/bahn_180" style="text-align:center; color:red;" data-title="180">1,0</td>
+                <td style="text-align:center;" data-title="UEG in g/m3" tal:content="item/ueg">1,0</td>
+                <td style="text-align:center;" data-title="Responsefaktor" tal:content="item/response">1,0</td>
+                <td style="text-align: center;" data-title="Emissionsarm">
+                  <img tal:define="navroot context/@@plone_portal_state/navigation_root_url"
+                       tal:condition="python: item.get('emissionsgeprueft', '') == 'ja'"
+                       tal:attributes="src string:${navroot}/++resource++nva.chemiedp/icon_emissionsarm.jpg"
+                       title="Emissionsarmes Produkt" alt="ja"/>
+                  <span tal:condition="python: item.get('emissionsgeprueft', '') != 'ja'"> - </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</span>
+
+<div tal:replace="structure provider:plone.belowcontentbody" />
+</div>

@@ -1,0 +1,35 @@
+<h1 tal:content="context/title"/>
+
+<table class="table table-striped">
+  <tr><th>Hersteller</th><td data-title="Hersteller" tal:content="python: context.hersteller.to_object.title"/></tr>
+  <tr><th>Produktklasse</th><td data-title="Produktklasse" tal:content="view/produktklasse"/></tr>
+  <tr tal:condition="python: context.flammpunkt and context.wertebereich">
+    <th>Flammpunkt</th>
+    <td data-title="Flammpunkt" tal:content="string: &gt;${context/flammpunkt}&deg;C"/>
+  </tr>
+  <tr tal:condition="python: context.flammpunkt and not context.wertebereich">
+    <th>Flammpunkt</th><td data-title="Flammpunkt" tal:content="string: ${context/flammpunkt}&deg;C"/>
+  </tr>
+  <tr tal:condition="python: not context.flammpunkt">
+    <th>Flammpunkt</th><td data-title="Flammpunkt" tal:content="string: nicht anwendbar"/>
+  </tr>
+  <tr>
+    <th>Emissionsgeprüft</th>
+    <td data-title="Emissionsgeprüft" tal:condition="context/emissionsgeprueft">ja</td>
+    <td data-title="Emissionsgeprüft" tal:condition="not: context/emissionsgeprueft">nein</td>
+  </tr>
+  <tr>
+    <th>Maschinen</th>
+    <td data-title="Maschinen"><ul><li tal:repeat="maschine view/maschinen" tal:content="maschine"/></ul></td>
+  </tr>
+  <tr>
+    <th>Materialverträglichkeit</th><td data-title="Materialverträglichkeit" tal:content="view/institut"/>
+  </tr>
+  <tr tal:condition="context/bemerkungen">
+    <th>Bemerkungen</th>
+    <td data-title="Bemerkungen"><td tal:content="structure context/bemerkungen"/>
+  </tr>
+</table>
+<div>
+<a href="#" tal:attributes="href view/parenturl" class="btn btn-small">Produktübersicht</a>
+</div>

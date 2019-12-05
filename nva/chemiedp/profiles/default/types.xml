@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- This file registers new types with portal_types. The types are
+     then configured with the corresponding files in types/*.xml. Note
+     that spaces are allowed in type names, but the corresponding XML file
+     uses an underscore instead. The "Factory-based Type Information with
+     dynamic views" refers to an FTI from Products.CMFDynamicViewFTI,
+     which supports Plone's "display" menu.
+  -->
+<object name="portal_types" meta_type="Plone Types Tool">
+  <!-- -*- extra stuff goes here -*- -->
+  <object name="nva.chemiedp.reinigungsmitteletiketten" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.reinigungsmittelmanuell" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.druckbestaeubungspuder" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.produktdatenblatt" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.maschine" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.hersteller" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.produktordner" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.maschinenordner" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.herstellerordner" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.datenbankchemiedp" meta_type="Dexterity FTI" />
+  <object name="nva.chemiedp.heatsetwaschmittel" meta_type="Dexterity FTI" />
+</object>

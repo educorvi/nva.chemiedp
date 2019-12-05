@@ -1,0 +1,13 @@
+<h1 tal:content="context/title"/>
+
+<table class="table table-striped">
+  <tr><th>Hersteller</th><td data-title="Hersteller" tal:content="python: context.hersteller.to_object.title"/></tr>
+  <tr>
+    <th>Emissionsgeprüft</th>
+    <td tal:condition="context/emissionsgeprueft">ja</td>
+    <td tal:condition="not: context/emissionsgeprueft">nein</td>
+  </tr>
+</table>
+<div>
+<a href="#" tal:attributes="href view/parenturl" class="btn btn-small">Produktübersicht</a>
+</div>

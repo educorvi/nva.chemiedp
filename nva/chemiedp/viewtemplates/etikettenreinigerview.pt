@@ -1,0 +1,44 @@
+<h1 tal:content="context/title"/>
+
+<table class="table table-striped">
+  <tr><th>Hersteller</th><td data-title="Hersteller" tal:content="python: context.hersteller.to_object.title"/></tr>
+  <tr><th>Einstufungen</th>
+      <td data-title="Einstufungen">
+        <p><img style="float: left; margin-right: 2px; margin-top: 2px"
+                tal:define="navroot context/@@plone_portal_state/navigation_root_url;
+                            einstufungen view/einstufungen;
+                            oldpicts einstufungen/oldpicts"
+                tal:repeat="pict oldpicts"
+                tal:attributes="src string:${navroot}/++resource++nva.chemiedp/${pict}"/>
+        </p>
+        <p><img style="float: left; margin-right: 2px; margin-top: 2px"
+                tal:define="navroot context/@@plone_portal_state/navigation_root_url;
+                            einstufungen view/einstufungen;
+                            picts einstufungen/picts"
+                tal:repeat="pict picts"
+                tal:attributes="src string:${navroot}/++resource++nva.chemiedp/${pict}"/>
+        </p>
+        <p tal:define="einstufungen view/einstufungen;
+                       words einstufungen/words" tal:content="words">
+        </p>
+      </td></tr>
+  <tr><th>Sätze</th><td data-title="Sätze" tal:content="view/saetze"></td>
+  <tr tal:condition="python: context.flammpunkt and context.wertebereich">
+    <th>Flammpunkt</th>
+    <td data-title="Flammpunkt" tal:content="string: &gt;${context/flammpunkt}&deg;C"/>
+  </tr>
+  <tr tal:condition="python: context.flammpunkt and not context.wertebereich">
+    <th>Flammpunkt</th><td data-title="Flammpunkt" tal:content="string: ${context/flammpunkt}&deg;C"/>
+  </tr>
+  <tr tal:condition="python: not context.flammpunkt">
+    <th>Flammpunkt</th><td data-title="Flammpunkt" tal:content="string: nicht anwendbar"/>
+  </tr>
+  <tr>
+    <th>Emissionsgeprüft</th>
+    <td tal:condition="context/emissionsgeprueft">ja</td>
+    <td tal:condition="not: context/emissionsgeprueft">nein</td>
+  </tr>
+</table>
+<div>
+<a href="#" tal:attributes="href view/parenturl" class="btn btn-small">Produktübersicht</a>
+</div>
